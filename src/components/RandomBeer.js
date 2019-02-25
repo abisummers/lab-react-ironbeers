@@ -15,31 +15,33 @@ const home = css`
   }
 `;
 
-class Beers extends Component {
-  state = { beers: [] };
+class RandomBeer extends Component {
+  state = {
+    randomBeer: []
+  };
+
   componentDidMount() {
-    axios.get("https://ironbeer-api.herokuapp.com/beers/all").then(res => {
-      // console.log(res.data);
-      this.setState({
-        beers: res.data
-      });
+    axios.get("https://ironbeer-api.herokuapp.com/beers/random").then(res => {
+      console.log(res.data);
+      this.setState({ randomBeer: res.data });
     });
   }
 
   render() {
-    const { beers } = this.state;
+    const { randomBeer } = this.state;
+
     return (
       <div>
         <div className={home}>
           <Link to="/">Home</Link>
         </div>
 
-        <h1>Beers </h1>
+        <h1>RandomBeer</h1>
 
-        {beers.map(el => {
+        {randomBeer.map(el => {
           return (
             <div key={el._id}>
-              <Link to={`/beers/${el._id}`}>{el.name}</Link>
+              <h3>{el.name}</h3>
               <img src={el.image_url} alt="beer" />
             </div>
           );
@@ -49,4 +51,4 @@ class Beers extends Component {
   }
 }
 
-export default Beers;
+export default RandomBeer;
